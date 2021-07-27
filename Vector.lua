@@ -2,8 +2,8 @@
 Vector = Class{}
 
 function Vector:init(x,y)
-  self.x=x
-  self.y=y
+  self.x=x or 0
+  self.y=y or 0
 end
 
 function Vector:length()

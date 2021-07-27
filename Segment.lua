@@ -6,8 +6,11 @@ function Segment:init(startp,endp)
   self.endp=endp
 end
 
+function Segment:length()
+  return Vector(self.endp.y-self.startp.y,self.endp.x-self.startp.x):length()
+end
 function Segment:toLine()
-  return Line{startp,endp:sub(startp):toVec()}
+  return Line{self.startp,self.endp:sub(self.startp):toVec()}
 end
 
 function Segment:project(vector)
@@ -29,8 +32,6 @@ function Segment:collides(segment)
   if  LineB:OnOneSide(self) then
     return false
   end
-  if
-
 
 end
 function Segment:OnOneSide(axis)
@@ -42,4 +43,8 @@ end
 
 function Segment:project(vector)
   local onto=vector:unit()
+end
+
+function Segment:print()
+  return "P1 : "+self.startp:print()+" | P2 : "+self.endp:print()+" ;\n"
 end

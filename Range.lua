@@ -7,7 +7,7 @@ function Range:init(a,b)
 end
 
 function Range:inside(x)
-  return x=>self.min and x<=self.max
+  return x>=self.min and x<=self.max
 end
 
 function Range:strictin(x)

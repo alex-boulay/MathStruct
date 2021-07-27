@@ -15,21 +15,21 @@ Lua adaption by Alexandre Boulay
 alexandre.boulay59@gmail.com
 
 ]]
-require "class"
+Class = require "class"
 
 local parts ={
   "Line",
-  "MathUtils",
   "Quads",
   "Range",
   "Segment",
   "Triangle",
   "Vector",
+  "MathUtils",
   "Vertice"
 }
 
 local mathstructs= {}
 
-for a in pairs(parts)do
-  table.insert(mathstructs,require(a))
+for kay,val in pairs(parts)do
+  table.insert(mathstructs,require(val))
 end
