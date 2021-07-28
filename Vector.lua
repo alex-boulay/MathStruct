@@ -73,3 +73,9 @@ function Vector:parallel(vector)
   --FloatThreshold inside looks if value is equal to 0 floatwise
   return FloatThreshold:inside(self:dotProd(vector:rotate90()))
 end
+
+function Vector:enclosed_angle(vect)
+  return math.deg(math.acos(self:unit():dotProd(vect:unit())))
+end
+
+NullVec = Vector{0,0}

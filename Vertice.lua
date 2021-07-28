@@ -31,6 +31,11 @@ function Vertice:toString()
   return "Vertice "..dumpstr(self)
 end
 
+
+function Vertice:__eq(vertice)
+  return self.x==vertice.x and vertice.y==self.y
+end
+
 Point = Vertice
 
 function Point:toString()

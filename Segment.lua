@@ -7,7 +7,7 @@ function Segment:init(startp,endp)
 end
 
 function Segment:length()
-  return Vector(self.endp.y-self.startp.y,self.endp.x-self.startp.x):length()
+  return MSnorm(self.endp.y-self.startp.y,self.endp.x-self.startp.x)
 end
 function Segment:toLine()
   return Line{self.startp,self.endp:sub(self.startp):toVec()}
