@@ -57,7 +57,7 @@ end
 
 --degrees version
 function Vector:rotate(angle)
-  return self:rotate(math.rad(angle))
+  return self:rotateR(math.rad(angle))
 end
 
 ---radiant version

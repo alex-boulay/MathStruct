@@ -47,6 +47,13 @@ end
  assert(l1:Lcol(l4), "Line collision failed")
 ]]
 
+function Line:OnOneSide(segment)
+  local d1 =self.base:sub(segment.startp)
+  local d2 = self.base:sub(segment.endp)
+  local n = self.direction:rotate(90)
+  return n:dotProd(d1)*n:dotProd(d2)>0
+end
+
 function Line:toString()
   return "Line : { base "..self.base:toString().." , direction : "..self.direction:toString().." }\n"
 end
