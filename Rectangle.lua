@@ -5,7 +5,6 @@ Rectangle = Class{}
 function Rectangle:init(origin,size)
   self.c=origin --origin is the botom left point
   self.s=size
-  --self:findVertices()
 end
 
 function Rectangle:findVertices()
@@ -27,4 +26,30 @@ function ORectangle:init(center,halfExtend,rotation)
   self.c=center
   self.he=halfExtend
   self.r=rotation
+  --na serve for finding the points 1 and 3 as 2is center + he and 4 is center-he
 end
+
+function ORectangle:findVertices()
+  --na serve for finding the points 1 and 3 as 2is center + he and 4 is center-he
+  if self.na ~= nil then
+    self.na=self.he:rotate(-2*self.r)
+  end
+  local vertices={
+  self.v1=self.c:sub(self.na),
+  self.v2=self.c:add(self.he),
+  self.v3=self.c:add(self.na),
+  self.v4=self.c:sub(self.he)}
+  return
+end
+--nr is the number of the edge wanted
+function ORectangle:Edge(nr)
+  local v=self:findVertices()
+  local n = nr % 4
+  local n1= (nr+ 1) %4
+  return Segment(tab[n],tab[n1])
+end
+
+-- separating axis for oriented rectangle
+function ORectangle:SepAxis(segment)
+  local Edge0 = self:Edge(0)
+  local Edge2 = self:Edge(2)

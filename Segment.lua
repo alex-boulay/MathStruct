@@ -64,7 +64,6 @@ assert(s1:Scol(s3),"Segment collision function error")
 assert(s2:Scol(s3),"Segment collision function error")
 ]]
 
-
 function Segment:intersect(segment)
 
 end
