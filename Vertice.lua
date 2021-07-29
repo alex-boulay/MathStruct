@@ -1,26 +1,13 @@
 
-Vertice = Class{}
+Vertice = Vector
 
-function Vertice:init(n,a)
-  if type(n)=="table" then
-    self.x=n.x or 0
-    self.y=n.y or 0
-  else
-    self.x=n or 0
-    self.y=a or 0
-  end
-end
-
-function Vertice:add(p)
-  return Vertice{self.x+p.x,self.y+p.y}
-end
-
-function Vertice:sub(p)
-  return Vertice{self.x-p.x,self.y-p.y}
+function Vertice:init(x,y)
+  self.x=x
+  self.y=y
 end
 
 function Vertice:toVec()
-  return Vector{self.x,self.y}
+  return Vector(self.x,self.y)
 end
 
 function Vertice:distance(vert)
@@ -39,5 +26,5 @@ end
 Point = Vertice
 
 function Point:toString()
-  return "Point "..self:dumpstr(self)
+  return "Point "..dumpstr(self)
 end

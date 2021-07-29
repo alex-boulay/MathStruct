@@ -24,8 +24,7 @@ local parts ={
   "Segment",
   "Triangle",
   "Vector",
-  "MathUtils",
-  "Vertice"
+  "MathUtils"
 }
 
 local mathstructs= {}
