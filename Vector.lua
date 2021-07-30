@@ -71,6 +71,9 @@ function Vector:dotProd(vec)
   return self.x * vec.x + self.y * vec.y
 end
 
+function Vector:toRange()
+  return Range(self.x,self.y)
+end
 --if paralells return true false otherwise
 function Vector:parallel(vector)
   --FloatThreshold inside looks if value is equal to 0 floatwise

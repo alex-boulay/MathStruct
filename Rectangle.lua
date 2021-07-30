@@ -31,14 +31,15 @@ end
 
 function ORectangle:findVertices()
   --na serve for finding the points 1 and 3 as 2is center + he and 4 is center-he
+  --here if na is already loaded in memory don't redo the heavy calculus
   if self.na ~= nil then
     self.na=self.he:rotate(-2*self.r)
   end
   local vertices={
-  self.v1=self.c:sub(self.na),
-  self.v2=self.c:add(self.he),
-  self.v3=self.c:add(self.na),
-  self.v4=self.c:sub(self.he)}
+  [0]=self.c:sub(self.na),
+  [1]=self.c:add(self.he),
+  [2]=self.v3=self.c:add(self.na),
+  [3]=self.v4=self.c:sub(self.he)}
   return
 end
 --nr is the number of the edge wanted
@@ -50,6 +51,20 @@ function ORectangle:Edge(nr)
 end
 
 -- separating axis for oriented rectangle
-function ORectangle:SepAxis(segment)
-  local Edge0 = self:Edge(0)
-  local Edge2 = self:Edge(2)
+function ORectangle:SepAxis(axis)
+  local n=segment.startp:sub(axis.endp)
+  local axisRange=axis:project(n):toRange()
+  local Proj= self:Edge(0):project(n):toRange():hull(self:Edge(2):project(n):toRange())
+  return not axisRange:overlapping(axisRange)
+end
+
+--Oriented rectange to oriented rectangle collision
+function ORectangle:ORectCol(orec)
+  local edge=self:Edge(0)
+  if orec:SepAxis(edge) then
+    return false
+  end
+  edge=self:Edge(1)
+  if orec:SepAxis(edge) then
+    return false
+  end
