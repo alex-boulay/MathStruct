@@ -28,6 +28,7 @@ end
 
 function Segment:project(vector)
   local onto=vector:unit()
+  return Range(onto:dotProd(self.startp),onto:dotProd(self.endp))
 end
 
 --segment collision

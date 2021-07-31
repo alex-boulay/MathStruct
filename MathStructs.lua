@@ -24,6 +24,7 @@ local parts ={
   "Segment",
   "Triangle",
   "Vector",
+  "Rectangle",
   "MathUtils"
 }
 

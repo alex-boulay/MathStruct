@@ -8,14 +8,14 @@ function Vector:init(x,y)
 end
 
 function Vector:length()
-  return math.sqrt(self.x*self.x + self.y*self.y)
+  if not self.len  then
+    self.len=math.sqrt(self.x*self.x + self.y*self.y)
+  end
+  return self.len
 end
 
 function Vector:unit()
-  local length=self:length()
-  if length<0 then
-    return self:divide(length)
-  end
+  return self:divide(self:length())
 end
 
 function Vector:toString()
@@ -35,7 +35,7 @@ function Vector:multiply(number)
 end
 
 function Vector:divide(number)
-  return self:multiply(1/number)
+  return Vector(self.x/number,self.y/number)
 end
 
 function Vector:inv()
@@ -82,6 +82,14 @@ end
 
 function Vector:enclosed_angle(vect)
   return math.deg(math.acos(self:unit():dotProd(vect:unit())))
+end
+
+--to verify
+function Vector:project(vect)
+  if vect:dotProd(vect)>0 then
+    return vect:multiply(vect:dotProd(vect),self:dotProd(vect))
+  end
+  return vect
 end
 
 NullVec = Vector(0,0)

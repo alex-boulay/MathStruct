@@ -21,3 +21,7 @@ end
 function Range:hull(range)
   return Range(math.min(self.min,range.min),math.max(self.max,range.max))
 end
+
+function Range:toString()
+  return "Range : min "..self.min.." , max "..self.max.." ;\n"
+end

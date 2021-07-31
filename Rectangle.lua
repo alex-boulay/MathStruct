@@ -8,9 +8,9 @@ function Rectangle:init(origin,size)
 end
 
 function Rectangle:findVertices()
-  self.a=Vertice(self.c.x,self.c.y+self.s.x) --top left vertice
-  self.b=Vertice(self.c.x+self.s.x,self.a.y) --top right vertice
-  self.d=Vertice(self.c.x,self.b.y)
+  self.a=Vector(self.c.x,self.c.y+self.s.x) --top left vertice
+  self.b=Vector(self.c.x+self.s.x,self.a.y) --top right vertice
+  self.d=Vector(self.c.x,self.b.y)
 end
 
 -- return true if this rectangle collides the rectangle in parameter
@@ -32,28 +32,28 @@ end
 function ORectangle:findVertices()
   --na serve for finding the points 1 and 3 as 2is center + he and 4 is center-he
   --here if na is already loaded in memory don't redo the heavy calculus
-  if self.na ~= nil then
+  if not self.na then
     self.na=self.he:rotate(-2*self.r)
   end
-  local vertices={
-  [0]=self.c:sub(self.na),
-  [1]=self.c:add(self.he),
-  [2]=self.v3=self.c:add(self.na),
-  [3]=self.v4=self.c:sub(self.he)}
-  return
+  return { [0]= self.c:sub(self.na),
+   [1]=self.c:add(self.he),
+   [2]=self.c:add(self.na),
+   [3]=self.c:sub(self.he)}
 end
 --nr is the number of the edge wanted
 function ORectangle:Edge(nr)
   local v=self:findVertices()
   local n = nr % 4
   local n1= (nr+ 1) %4
-  return Segment(tab[n],tab[n1])
+  return Segment(v[n],v[n1])
 end
 
 -- separating axis for oriented rectangle
 function ORectangle:SepAxis(axis)
-  local n=segment.startp:sub(axis.endp)
-  local axisRange=axis:project(n):toRange()
+  local n=axis.startp:sub(axis.endp)
+  print(n:toString())
+  print(axis:project(n):toString())
+  local axisRange=axis:project(n)
   local Proj= self:Edge(0):project(n):toRange():hull(self:Edge(2):project(n):toRange())
   return not axisRange:overlapping(axisRange)
 end
@@ -68,3 +68,14 @@ function ORectangle:ORectCol(orec)
   if orec:SepAxis(edge) then
     return false
   end
+end
+--[[Testcode
+  require "MathStructs"
+  v1= Vector(3, 5)
+  v2= Vector(1, 3)
+  v3= Vector(10, 5)
+  v4= Vector(2, 2)
+  a = ORectangle(v1,v2,15)
+  b = ORectangle(v3,v4, -15)
+  assert(not a:ORectCol(b),"Oriented rectangle collision issue");
+]]
