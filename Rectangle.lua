@@ -51,10 +51,8 @@ end
 -- separating axis for oriented rectangle
 function ORectangle:SepAxis(axis)
   local n=axis.startp:sub(axis.endp)
-  print(n:toString())
-  print(axis:project(n):toString())
   local axisRange=axis:project(n)
-  local Proj= self:Edge(0):project(n):toRange():hull(self:Edge(2):project(n):toRange())
+  local Proj= self:Edge(0):project(n):hull(self:Edge(2):project(n))
   return not axisRange:overlapping(axisRange)
 end
 
