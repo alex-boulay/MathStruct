@@ -21,3 +21,13 @@ end
 function MSoverlapping(min1,max1,min2,max2)
   return min2 <= max1 and min1<= max2
 end
+
+function MSclamp(x,min,max)
+  if x<min then
+    return min
+  elseif x>max then
+    return max
+  else
+    return x
+  end
+end

@@ -29,6 +29,7 @@ function ORectangle:init(center,halfExtend,rotation)
   --na serve for finding the points 1 and 3 as 2is center + he and 4 is center-he
 end
 
+
 function ORectangle:findVertices()
   --na serve for finding the points 1 and 3 as 2is center + he and 4 is center-he
   --here if na is already loaded in memory don't redo the heavy calculus

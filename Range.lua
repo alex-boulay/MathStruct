@@ -25,3 +25,13 @@ end
 function Range:toString()
   return "Range : min "..self.min.." , max "..self.max.." ;\n"
 end
+
+function Range:clamp(x)
+  if x<self.min then
+    return self.min
+  elseif x>self.max then
+    return self.max
+  else
+    return x
+  end
+end

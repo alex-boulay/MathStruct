@@ -92,4 +92,8 @@ function Vector:project(vect)
   return vect
 end
 
+function Vector:clampRect(rect)
+  return Vector(Range(rect.origin.x,rect.origin.x+rect.size.x):clamp(self.x),Range(rect.origin.y,rect.origin.y+rect.size.y):clamp(self.y))
+end
+
 NullVec = Vector(0,0)
