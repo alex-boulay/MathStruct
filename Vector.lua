@@ -93,7 +93,7 @@ function Vector:project(vect)
 end
 
 function Vector:clampRect(rect)
-  return Vector(Range(rect.origin.x,rect.origin.x+rect.size.x):clamp(self.x),Range(rect.origin.y,rect.origin.y+rect.size.y):clamp(self.y))
+  return Vector(Range(rect.c.x,rect.c.x+rect.s.x):clamp(self.x),Range(rect.c.y,rect.c.y+rect.s.y):clamp(self.y))
 end
 
 NullVec = Vector(0,0)

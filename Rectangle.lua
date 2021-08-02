@@ -78,3 +78,5 @@ end
   b = ORectangle(v3,v4, -15)
   assert(not a:ORectCol(b),"Oriented rectangle collision issue");
 ]]
+
+function ORectangle:ColC(circle)

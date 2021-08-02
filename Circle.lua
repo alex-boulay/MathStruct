@@ -49,9 +49,19 @@ c = Circle(Vector(4, 4), 3);
 s = Segment(Vector(8, 6), Vector(13, 6))
 assert(not c:ColS(s),"Circle Segment collision function error")
 ]]
-function Circle:ColRect()
+function Circle:ColRect(rect)
+  return self:ColP(self.c:clampRect(rect))
 end
 
+--[[ Test
+require "MathStructs"
+r = Rectangle(Vector(3, 2), Vector(6, 4))
+c1 = Circle(Vector(5, 4), 1)
+c2 = Circle(Vector(7, 8), 1)
+assert(c1:ColRect(r),"Circle Rectangle collision function error")
+assert(not c2:ColRect(r),"Circle Rectangle collision function error")
+
+]]
 Disc = Class{}
 
 function Disc:init(center,rad1,rad2)
