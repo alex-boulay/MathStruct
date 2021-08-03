@@ -14,10 +14,49 @@ function Rectangle:findVertices()
 end
 
 -- return true if this rectangle collides the rectangle in parameter
-function Rectangle:RectCol(rect)
+function Rectangle:ColR(rect)
   return MSoverlapping(self.c.x,self.c.x+self.s.x,rect.c.x,rect.c.x+rect.s.x) and MSoverlapping(self.c.y,self.c.y+self.s.y,rect.c.y,rect.c.y+rect.s.y)
 
 end
+
+function Rectangle:ColL(line)
+  local n =line.direction:rotate90()
+  if not self.a then
+    self:findVertices()
+  end
+  local dp1=n:dotProd(self.a:sub(l.base))
+  local dp2=n:dotProd(self.b:sub(l.base))
+  local dp3=n:dotProd(self.c:sub(l.base))
+  local dp4=n:dotProd(self.d:sub(l.base))
+  return dp1*dp2<=0 or dp2*dp3<=0 or dp3*dp4<=0
+end
+
+
+--[[Testcode
+  require "MathStructs"
+  l = Line(Vector(6, 8), Vector(2, -3))
+  r = Rectangle(Vector(3, 2),Vector(6, 4))
+  assert(r:ColL(l),"Rectangle Line Collision function error")
+]]
+
+function Rectangle:ColS(segment)
+  if not Line(segment.startp,segment.endp:sub(segment.startp))then
+    return false
+  end
+  if not Range(self.c.x,self.c.x+self.s.x):overlapping(Range(segment.startp.x,segment.endp.x))then
+    return false
+  end
+  return Range(self.c.y,self.c.y+self.s.y):overlapping(Range(segment.startp.y,segment.endp.y))
+end
+
+
+--[[Testcode
+  require "MathStructs"
+
+  r = Rectangle(Vector(3, 2), Vector(6, 4))
+  s = Segment(Vector(6, 8), Vector(10, 2))
+  assert(r:ColS(s),"Segment Rectangle collision function issue")
+  ]]
 
 ORectangle = Class{}
 
@@ -58,7 +97,7 @@ function ORectangle:SepAxis(axis)
 end
 
 --Oriented rectange to oriented rectangle collision
-function ORectangle:ORectCol(orec)
+function ORectangle:ColOR(orec)
   local edge=self:Edge(0)
   if orec:SepAxis(edge) then
     return false
@@ -76,7 +115,16 @@ end
   v4= Vector(2, 2)
   a = ORectangle(v1,v2,15)
   b = ORectangle(v3,v4, -15)
-  assert(not a:ORectCol(b),"Oriented rectangle collision issue");
+  assert(not a:ColOR(b),"Oriented rectangle collision issue");
 ]]
 
-function ORectangle:ColC(circle)
+function ORectangle:ColC(cir)
+  return Circle(cir.c:sub(self.c):add(self.he),cir.r):ColR(Rectangle(Vector(0,0),self.he:multiply(2)))
+end
+
+--[[Testcode
+  require "MathStructs"
+  r = ORectangle(Vector(5, 4),Vector(3, 2), 30)
+  c = Circle(Vector(5, 7), 2)
+  assert(r:ColC(c),"Oriented rectangle circle collision issue")
+  ]]
