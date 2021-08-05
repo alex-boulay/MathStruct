@@ -59,14 +59,14 @@ end
   assert(r:ColS(s),"Segment Rectangle collision function issue")
   ]]
 
-function Rectangle:Corner(num)
+function Rectangle:corner(num)
  return self:findVertices()[num%4]
 end
 
 function Rectangle:SepAxis(seg)
   local n= seg.startp:sub(seg.endp)
-  local rA=Segment(self:Corner(0),self:Corner(1))
-  local rB=Segment(self:Corner(2),self:Corner(3))
+  local rA=Segment(self:corner(0),self:corner(1))
+  local rB=Segment(self:corner(2),self:corner(3))
   local rea=rA:project(n)
   local reb=rB:project(n)
   local rProj=rea:hull(reb)
@@ -74,7 +74,12 @@ function Rectangle:SepAxis(seg)
   return not rProj:hull(arange)
 end
 
-
+function Rectangle:enlarge(point)
+  return Rectangle(
+      Vector(math.min(self.c.x,point.x),math.min(self.c.y,point.y)),
+      Vector(math.max(self.c.x+self.s.x,point.x),math.max(self.c.y+self.s.y,point.y))
+    )
+end
 
 ORectangle = Class{}
 
@@ -110,9 +115,8 @@ end
 -- separating axis for oriented rectangle
 function ORectangle:SepAxis(axis)
   local n=axis.startp:sub(axis.endp)
-  local axisRange=axis:project(n)
   local Proj= self:Edge(0):project(n):hull(self:Edge(2):project(n))
-  return not axisRange:overlapping(Proj)
+  return not axis:project(n):overlapping(Proj)
 end
 
 --Oriented rectange to oriented rectangle collision
@@ -146,4 +150,34 @@ end
   r = ORectangle(Vector(5, 4),Vector(3, 2), 30)
   c = Circle(Vector(5, 7), 2)
   assert(r:ColC(c),"Oriented rectangle circle collision issue")
+  ]]
+
+function ORectangle:corner(nr)
+  return self:findVertices()[nr%4]
+end
+
+function ORectangle:hullR()
+  --Rectangular hull of the Orect
+  local rect=Rectangle(self.c,NullVec)
+  for i=0,4 do
+    rect=rect:enlarge(self:corner(i))
+  end
+  return rect
+end
+
+function ORectangle:ColR(rect)
+  if not self:hullR():ColR(rect) then
+    return false
+  end
+  if not rect:SepAxis(self:Edge(0)) then
+    return false
+  end
+  return not rect:SepAxis(self:Edge(1))
+end
+
+--[[Testcode
+  require "MathStructs"
+  Aar = Rectangle(Vector(1, 5), Vector(3, 3))
+  OR = ORectangle(Vector(10, 4),Vector(4, 2), 25)
+  assert(not OR:ColR(Aar),"Oriented rectangle rectangle collision function issue");
   ]]
