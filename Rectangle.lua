@@ -8,9 +8,12 @@ function Rectangle:init(origin,size)
 end
 
 function Rectangle:findVertices()
-  self.a=Vector(self.c.x,self.c.y+self.s.x) --top left vertice
-  self.b=Vector(self.c.x+self.s.x,self.a.y) --top right vertice
-  self.d=Vector(self.c.x,self.b.y)
+  if not self.a then
+    self.a=Vector(self.c.x,self.c.y+self.s.x) --top left vertice
+    self.b=Vector(self.c.x+self.s.x,self.a.y) --top right vertice
+    self.d=Vector(self.c.x,self.b.y)
+  end
+  return {[0]=self.a,[1]=self.b,[2]=self.c,[3]=self.d}
 end
 
 -- return true if this rectangle collides the rectangle in parameter
@@ -21,9 +24,7 @@ end
 
 function Rectangle:ColL(line)
   local n =line.direction:rotate90()
-  if not self.a then
-    self:findVertices()
-  end
+  self:findVertices()
   local dp1=n:dotProd(self.a:sub(l.base))
   local dp2=n:dotProd(self.b:sub(l.base))
   local dp3=n:dotProd(self.c:sub(l.base))
@@ -58,6 +59,23 @@ end
   assert(r:ColS(s),"Segment Rectangle collision function issue")
   ]]
 
+function Rectangle:Corner(num)
+ return self:findVertices()[num%4]
+end
+
+function Rectangle:SepAxis(seg)
+  local n= seg.startp:sub(seg.endp)
+  local rA=Segment(self:Corner(0),self:Corner(1))
+  local rB=Segment(self:Corner(2),self:Corner(3))
+  local rea=rA:project(n)
+  local reb=rB:project(n)
+  local rProj=rea:hull(reb)
+  arange=seg:project(n)
+  return not rProj:hull(arange)
+end
+
+
+
 ORectangle = Class{}
 
 -- center is a point or vector halfExtend is the vector between center and top right corner
@@ -75,17 +93,18 @@ function ORectangle:findVertices()
   if not self.na then
     self.na=self.he:rotate(-2*self.r)
   end
-  return { [0]= self.c:sub(self.na),
-   [1]=self.c:add(self.he),
-   [2]=self.c:add(self.na),
-   [3]=self.c:sub(self.he)}
+  if not self.v1 then
+    self.v1=self.c:sub(self.na)
+    self.v2=self.c:add(self.he)
+    self.v3=self.c:add(self.na)
+    self.v4=self.c:sub(self.he)
+  end
+  return { [0]=self.v1,[1]=self.v2,[2]=self.v3,[3]=self.v4}
 end
 --nr is the number of the edge wanted
 function ORectangle:Edge(nr)
   local v=self:findVertices()
-  local n = nr % 4
-  local n1= (nr+ 1) %4
-  return Segment(v[n],v[n1])
+  return Segment(v[nr % 4],v[(nr+ 1) %4])
 end
 
 -- separating axis for oriented rectangle
@@ -93,7 +112,7 @@ function ORectangle:SepAxis(axis)
   local n=axis.startp:sub(axis.endp)
   local axisRange=axis:project(n)
   local Proj= self:Edge(0):project(n):hull(self:Edge(2):project(n))
-  return not axisRange:overlapping(axisRange)
+  return not axisRange:overlapping(Proj)
 end
 
 --Oriented rectange to oriented rectangle collision
