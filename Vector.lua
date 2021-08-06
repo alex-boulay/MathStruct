@@ -42,6 +42,10 @@ function Vector:inv()
   return Vector(-self.x,-self.y)
 end
 
+function Vector:eq(vect)
+  return self.x==vect.x and self.y==vect.y
+end
+
 --90 degree rotation pi/2 rad
 function Vector:rotate90()
   return Vector(-self.y,self.x)
@@ -97,3 +101,19 @@ function Vector:clampRect(rect)
 end
 
 NullVec = Vector(0,0)
+
+--Function relative to points collision - a vector can represent a point
+
+function Vector:ColP(point)
+  return self.x==point.x and self.y==point.y
+end
+
+--[[Testcode
+  require "MathStructs"
+a = Vector(2, 3)
+b = Vector(2, 3)
+c = Vector(3, 4)
+assert(a:ColP(b),"point to point collision error(Vector:ColP)")
+assert(not a:ColP(c),"point to point collision error(Vector:ColP)")
+assert(not b:ColP( c),"point to point collision error(Vector:ColP)")
+]]

@@ -71,3 +71,17 @@ end
 function Segment:print()
   return "P1 : "+self.startp:print()+" | P2 : "+self.endp:print()+" ;\n"
 end
+
+function Segment:ColP(point)
+  local d=self.endp:sub(self.startp)
+  local lp=point:sub(self.startp)
+  local pr= lp:project(d)
+  return lp:eq(pr) and pr.length()<=d:length()and 0<= pr:dotProd(d)
+end
+
+--[[Testcode
+require "MathStructs"
+p = Vector(1, 4)
+s = Segment(Vector(6, 6),Vector(13, 4))
+assert(not s:ColP(p),"Segment to point collision function issue");
+]]

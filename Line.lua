@@ -57,3 +57,17 @@ end
 function Line:toString()
   return "Line : { base "..self.base:toString().." , direction : "..self.direction:toString().." }\n"
 end
+
+function Line:ColP(point)
+  if(self.base:ColP(point))then
+    return true
+  end
+  return self.direction:parallel(point:sub(self.base))
+end
+
+--[[ Testcode
+ require "MathStructs"
+p = Vector(5, 3)
+l = Line(Vector(3, 7), Vector(7, -2))
+assert(not l:ColP(p),"Line Point Collision error")
+]]
