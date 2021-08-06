@@ -53,7 +53,6 @@ end
 
 --[[Testcode
   require "MathStructs"
-
   r = Rectangle(Vector(3, 2), Vector(6, 4))
   s = Segment(Vector(6, 8), Vector(10, 2))
   assert(r:ColS(s),"Segment Rectangle collision function issue")
@@ -80,6 +79,21 @@ function Rectangle:enlarge(point)
       Vector(math.max(self.c.x+self.s.x,point.x),math.max(self.c.y+self.s.y,point.y))
     )
 end
+
+function Rectangle:ColP(point)
+  return self.c.x <= point.x and
+  self.c.y <= point.y and
+  self.s.x + self.c.x >= point.x and
+  self.c.y + self.s.y >= point.y
+end
+--[[Testcode
+require "MathStructs"
+r = Rectangle(Vector(3, 2), Vector(6, 4))
+p1 = Vector(4, 5)
+p2 = Vector(11, 4)
+assert(r:ColP(p1),"Rectangle Point collision function issue");
+assert(not r:ColP(p2),"Rectangle Point collision function issue");
+]]
 
 ORectangle = Class{}
 
@@ -181,3 +195,16 @@ end
   OR = ORectangle(Vector(10, 4),Vector(4, 2), 25)
   assert(not OR:ColR(Aar),"Oriented rectangle rectangle collision function issue");
   ]]
+
+  function ORectangle:ColP(point)
+    return Rectangle(NullVec,self.he:multiply(2)):ColP(point:sub(self.c):rotate(-self.r):add(self.he))
+  end
+
+--[[Testcode
+  require "MathStructs"
+  r =ORectangle(Vector(5, 4), Vector(3, 2), 30)
+  a = Vector(6, 5)
+  b = Vector(10, 6)
+  assert(r:ColP(a),"Oriented Rectangle point collision function issue")
+  assert(not r:ColP(b),"Oriented Rectangle point collision function issue")
+]]

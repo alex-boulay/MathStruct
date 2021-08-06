@@ -5,7 +5,13 @@ FloatThreshold= Range(-0.0001,0.0001)
 function dumpstr(struct)
   dump="{ "
   for k,val in pairs(struct) do
-    dump=dump..k.." : "..val.." ; "
+    local str=""
+    if type(val)=="table" then
+      str=dumpstr(val)
+    else
+      str=val
+    end
+    dump=dump..k.." : "..str.." ; "
   end
   return dump.." }"
 end
