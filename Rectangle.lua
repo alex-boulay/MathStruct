@@ -106,6 +106,10 @@ function ORectangle:init(center,halfExtend,rotation)
 end
 
 
+function ORectangle:toRect(origin)
+    return Rectangle(origin or NullVec,self.he:multiply(2))
+end
+
 function ORectangle:findVertices()
   --na serve for finding the points 1 and 3 as 2is center + he and 4 is center-he
   --here if na is already loaded in memory don't redo the heavy calculus
@@ -197,7 +201,7 @@ end
   ]]
 
   function ORectangle:ColP(point)
-    return Rectangle(NullVec,self.he:multiply(2)):ColP(point:sub(self.c):rotate(-self.r):add(self.he))
+    return self:toRect():ColP(point:sub(self.c):rotate(-self.r):add(self.he))
   end
 
 --[[Testcode
@@ -207,4 +211,20 @@ end
   b = Vector(10, 6)
   assert(r:ColP(a),"Oriented Rectangle point collision function issue")
   assert(not r:ColP(b),"Oriented Rectangle point collision function issue")
+]]
+
+function ORectangle:ColS(s)
+  return self:toRect():ColS(
+    Segment(
+    s.startp:sub(self.c):rotate(-self.r):add(self.he),
+    s.endp:sub(self.c):rotate(-self.r):add(self.he)
+    )
+  )
+end
+
+--[[Testcode
+  require "MathStructs"
+s = Segment(Vector(1, 8),Vector(7, 5))
+r = ORectangle(Vector(5, 4),Vector(3, 2), 30)
+assert(r:ColS(s),"Orect segment function collision issue");
 ]]

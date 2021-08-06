@@ -71,3 +71,34 @@ p = Vector(5, 3)
 l = Line(Vector(3, 7), Vector(7, -2))
 assert(not l:ColP(p),"Line Point Collision error")
 ]]
+
+function Line:ColS(segment)
+  return not segment:OnOneSide(self)
+end
+
+--[[ Testcode
+ require "MathStructs"
+base = Vector(3, 4)
+direction = Vector(4, -2)
+point1 = Vector(8, 4)
+point2 = Vector(11, 7)
+s = Segment(point1, point2)
+l = Line(base, direction)
+assert(not l:ColS(s),"Line segment collision function issue")
+]]
+
+function Line:ColOR(orect)
+  return orect:toRect():ColL(
+    Line(self.base:sub(orect.c):rotate(-orect.r):add(orect.he),
+    self.direction:rotate(-orect.r)
+    )
+  )
+end
+
+
+--[[ Testcode
+ require "MathStructs"
+l = Line(Vector(7, 3), Vector(2, -1))
+r = ORectangle(Vector(5, 4), Vector(3, 2), 30)
+assert(l:ColOR(r),"Line Oriented Rectangle collision function issue")
+]]
