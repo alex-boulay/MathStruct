@@ -95,6 +95,12 @@ assert(r:ColP(p1),"Rectangle Point collision function issue");
 assert(not r:ColP(p2),"Rectangle Point collision function issue");
 ]]
 
+function Rectangle:toCircle()
+  --circular hull fo the rectangle
+  local halfsize=self.s:divide(2)
+  return Circle(self.c:add(halfsize),halfsize:length)
+end
+
 ORectangle = Class{}
 
 -- center is a point or vector halfExtend is the vector between center and top right corner
@@ -228,3 +234,8 @@ s = Segment(Vector(1, 8),Vector(7, 5))
 r = ORectangle(Vector(5, 4),Vector(3, 2), 30)
 assert(r:ColS(s),"Orect segment function collision issue");
 ]]
+
+function ORectangle:toCircle()
+  --To get a circular hull of the Orec
+  return Circle(self.c,self.he:length())
+end
