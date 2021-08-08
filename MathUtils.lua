@@ -7,9 +7,9 @@ function dumpstr(struct)
   for k,val in pairs(struct) do
     local str=""
     if type(val)=="table" then
-      str=dumpstr(val)
-    else
-      str=val
+      str=""..dumpstr(val)
+    elseif type(val)~="function" then
+      str=""..val
     end
     dump=dump..k.." : "..str.." ; "
   end

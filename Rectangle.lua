@@ -98,7 +98,7 @@ assert(not r:ColP(p2),"Rectangle Point collision function issue");
 function Rectangle:toCircle()
   --circular hull fo the rectangle
   local halfsize=self.s:divide(2)
-  return Circle(self.c:add(halfsize),halfsize:length)
+  return Circle(self.c:add(halfsize),halfsize:length())
 end
 
 ORectangle = Class{}
