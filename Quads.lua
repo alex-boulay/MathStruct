@@ -1,6 +1,6 @@
-Rectangle = Class{}
+Quad = Class{}
 
-function Rectangle:init(vertices)
+function Quad:init(vertices)
   self.v1=vertices[1]
   self.v2=vertices[2]
   self.v3=vertices[3]
@@ -10,26 +10,26 @@ function Rectangle:init(vertices)
   self.v3= Vertice{self.v1.x+self.width,self.v1.y+self.height}
 end
 
-function Rectangle:getVertices()
+function Quad:getVertices()
   return {self.v1,self.v2,self.v3,self.v4}
 end
 
 
-function Rectangle:collides(Segment)
+function Quad:collides(Segment)
 
 end
 
-function Rectangle:intersections(line)
+function Quad:intersections(line)
   local norm= line.direction:rotate90()
 
 end
 --[[
 ]]
-function Rectangle:intersect(point,angle)
+function Quad:intersect(point,angle)
 
 end
 
-function Rectangle:Draw(Canvas)
+function Quad:Draw(Canvas)
 
 
 end

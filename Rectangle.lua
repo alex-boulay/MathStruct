@@ -7,6 +7,10 @@ function Rectangle:init(origin,size)
   self.s=size
 end
 
+function Rectangle:type()
+  return "Rectangle"
+end
+
 function Rectangle:findVertices()
   if not self.a then
     self.a=Vector(self.c.x,self.c.y+self.s.x) --top left vertice
@@ -111,6 +115,9 @@ function ORectangle:init(center,halfExtend,rotation)
   --na serve for finding the points 1 and 3 as 2is center + he and 4 is center-he
 end
 
+function ORectangle:type()
+  return "ORectangle"
+end
 
 function ORectangle:toRect(origin)
     return Rectangle(origin or NullVec,self.he:multiply(2))

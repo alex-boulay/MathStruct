@@ -6,6 +6,10 @@ function Segment:init(startp,endp)
   self.endp=endp
 end
 
+function Segment:type()
+  return "Segment"
+end
+
 function Segment:length()
   return MSnorm(self.endp.y-self.startp.y,self.endp.x-self.startp.x)
 end

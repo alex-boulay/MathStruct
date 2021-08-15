@@ -6,6 +6,10 @@ function Range:init(a,b)
   self.max = math.max(a,b)
 end
 
+function Range:type()
+  return "Range"
+end
+
 function Range:inside(x)
   return x>=self.min and x<=self.max
 end

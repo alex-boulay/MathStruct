@@ -7,6 +7,10 @@ function Vector:init(x,y)
   self.y=y or 0
 end
 
+function Vector:type()
+  return "Vector"
+end
+
 function Vector:length()
   if not self.len  then
     self.len=math.sqrt(self.x*self.x + self.y*self.y)

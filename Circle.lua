@@ -5,6 +5,9 @@ function Circle:init(center,radius)
   self.r=radius
 end
 
+function Circle:type()
+  return "Circle"
+end
 --collision with another circle
 function Circle:ColC(circle)
   return Segment(self.c,circle.c)<=(self.r+circle.r)
@@ -69,4 +72,8 @@ function Disc:init(center,rad1,rad2)
   self.c=center
   self.r1=min(rad1,rad2)
   self.r2=max(rad1,rad2)
+end
+
+function Disc:type()
+  return "Disc"
 end
