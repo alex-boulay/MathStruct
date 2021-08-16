@@ -105,6 +105,14 @@ function Rectangle:toCircle()
   return Circle(self.c:add(halfsize),halfsize:length())
 end
 
+function Rectangle:ColC(circle)
+  return circle:ColR(self)
+end
+
+function Rectangle:ColOR(orect)
+  return orect:ColR(self)
+end
+
 ORectangle = Class{}
 
 -- center is a point or vector halfExtend is the vector between center and top right corner
@@ -245,4 +253,8 @@ assert(r:ColS(s),"Orect segment function collision issue");
 function ORectangle:toCircle()
   --To get a circular hull of the Orec
   return Circle(self.c,self.he:length())
+end
+
+function ORectangle:ColL(line)
+  return line:ColOR(self)
 end

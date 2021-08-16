@@ -37,3 +37,15 @@ function MSclamp(x,min,max)
     return x
   end
 end
+
+
+function MScollide( a, b)
+ local type = {
+   "Rectangle"= a:ColR(b),
+   "Circle"= a:ColC(b),
+   "Line"= a:ColL(b)
+   "Segment"= a:ColS(b),
+   "ORectangle"= a:ColOR(b),
+   "Point"= a:ColP(b)
+}
+return

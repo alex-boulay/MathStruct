@@ -8,7 +8,7 @@ function Vector:init(x,y)
 end
 
 function Vector:type()
-  return "Vector"
+  return "Point"
 end
 
 function Vector:length()
@@ -121,3 +121,23 @@ assert(a:ColP(b),"point to point collision error(Vector:ColP)")
 assert(not a:ColP(c),"point to point collision error(Vector:ColP)")
 assert(not b:ColP( c),"point to point collision error(Vector:ColP)")
 ]]
+
+function Vector:ColC(circle)
+  return circle:ColP(self)
+end
+
+function Vector:ColR(rect)
+  return rect:ColP(self)
+end
+
+function Vector:ColOR(orect)
+  return orect:ColP(self)
+end
+
+function Vector:ColL(line)
+  return line:ColP(self)
+end
+
+function Vector:ColS(seg)
+  return seg:ColP(self)
+end

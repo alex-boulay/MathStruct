@@ -66,6 +66,7 @@ assert(not c2:ColR(r),"Circle Rectangle collision function error")
 
 ]]
 
+
 Disc = Class{}
 
 function Disc:init(center,rad1,rad2)

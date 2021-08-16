@@ -36,7 +36,7 @@ function Segment:project(vector)
 end
 
 --segment collision
-function Segment:Scol(segment)
+function Segment:ColS(segment)
   local LineA, LineB
   LineA = self:toLine()
   if segment:OnOneSide(LineA) then
@@ -64,9 +64,9 @@ e = Vector(9,8)
 s1= Segment(a,b)
 s2= Segment(c,d)
 s3= Segment(b,e)
-assert(not s1:Scol(s2),"Segment collision function error")
-assert(s1:Scol(s3),"Segment collision function error")
-assert(s2:Scol(s3),"Segment collision function error")
+assert(not s1:ColS(s2),"Segment collision function error")
+assert(s1:ColS(s3),"Segment collision function error")
+assert(s2:ColS(s3),"Segment collision function error")
 ]]
 
 function Segment:intersect(segment)
@@ -89,3 +89,19 @@ p = Vector(1, 4)
 s = Segment(Vector(6, 6),Vector(13, 4))
 assert(not s:ColP(p),"Segment to point collision function issue");
 ]]
+
+function Segment:ColC(circle)
+  return circle:ColS(self)
+end
+
+function Segment:ColL(line)
+  return line:ColS(self)
+end
+
+function Segment:ColR(rect)
+  return rect:ColS(self)
+end
+
+function Segment:ColOR(orect)
+  return orect:ColS(self)
+end

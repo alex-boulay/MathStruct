@@ -105,3 +105,11 @@ l = Line(Vector(7, 3), Vector(2, -1))
 r = ORectangle(Vector(5, 4), Vector(3, 2), 30)
 assert(l:ColOR(r),"Line Oriented Rectangle collision function issue")
 ]]
+
+function Line:ColR(rect)
+  return rect:ColL(self)
+end
+
+function Line:ColC(circle)
+  return circle:ColL(self)
+end
