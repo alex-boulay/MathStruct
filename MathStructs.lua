@@ -34,3 +34,5 @@ local mathstructs= {}
 for kay,val in pairs(parts)do
   table.insert(mathstructs,require(val))
 end
+
+return mathstructs
