@@ -29,6 +29,9 @@ local parts ={
   "MathUtils"
 }
 
+if love~=nil then
+  table.insert(parts,"MSLove2D")
+
 local mathstructs= {}
 
 for kay,val in pairs(parts)do

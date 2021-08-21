@@ -66,6 +66,12 @@ function Rectangle:corner(num)
  return self:findVertices()[num%4]
 end
 
+--nr is the number of the edge wanted
+function Rectangle:Edge(nr)
+  local v=self:findVertices()
+  return Segment(v[nr % 4],v[(nr+ 1) %4])
+end
+
 function Rectangle:SepAxis(seg)
   local n= seg.startp:sub(seg.endp)
   local rA=Segment(self:corner(0),self:corner(1))
