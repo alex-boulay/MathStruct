@@ -31,6 +31,7 @@ local parts ={
 
 if love~=nil then
   table.insert(parts,"MSLove2D")
+end
 
 local mathstructs= {}
 
