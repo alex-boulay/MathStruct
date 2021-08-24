@@ -11,13 +11,14 @@ function Rectangle:type()
   return "Rectangle"
 end
 
+--warning C is the 4th point in a trigo rectangle a->b->d->c is the hull
 function Rectangle:findVertices()
   if not self.a then
-    self.a=Vector(self.c.x,self.c.y+self.s.x) --top left vertice
+    self.a=Vector(self.c.x,self.c.y+self.s.y) --top left vertice
     self.b=Vector(self.c.x+self.s.x,self.a.y) --top right vertice
-    self.d=Vector(self.c.x,self.b.y)
+    self.d=Vector(self.b.x,self.c.y)
   end
-  return {[0]=self.a,[1]=self.b,[2]=self.c,[3]=self.d}
+  return {[0]=self.a,[1]=self.b,[2]=self.d,[3]=self.c}
 end
 
 -- return true if this rectangle collides the rectangle in parameter
@@ -70,6 +71,16 @@ end
 function Rectangle:Edge(nr)
   local v=self:findVertices()
   return Segment(v[nr % 4],v[(nr+ 1) %4])
+end
+
+function Rectangle:Edges()
+  self:findVertices()
+  return {
+    [0]=Segment(self.a,self.b),
+    [1]=Segment(self.b,self.d),
+    [2]=Segment(self.d,self.c),
+    [3]=Segment(self.c,self.a)
+  }
 end
 
 function Rectangle:SepAxis(seg)

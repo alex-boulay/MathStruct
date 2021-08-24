@@ -141,3 +141,20 @@ end
 function Vector:ColS(seg)
   return seg:ColP(self)
 end
+
+--opposite segments of a rectangle for 
+function Vect:OpS(rect)
+  opsegs={}
+  for key,vert in pairs(rect:findVertices()) do
+    local coll=0
+    for key2,edge in pairs(rect:Edges()) do
+      if Segment(self,vert):ColS(edge) then
+        colls=colls+1
+      end
+    end
+    if colls>=3 then
+      table.insert(opsegs,edge)
+    end
+  end
+  return opsegs{}
+end
