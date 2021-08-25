@@ -142,7 +142,7 @@ function Vector:ColS(seg)
   return seg:ColP(self)
 end
 
---opposite segments of a rectangle for 
+--opposite segments of a rectangle for
 function Vect:OpS(rect)
   opsegs={}
   for key,vert in pairs(rect:findVertices()) do
@@ -157,4 +157,9 @@ function Vect:OpS(rect)
     end
   end
   return opsegs{}
+end
+
+--distance without sqrt
+function Vector:distperf(v)
+  return (v.x-self.x)*(v.x-self.x)+(v.y-self.y)*(v.y-self.y)
 end
