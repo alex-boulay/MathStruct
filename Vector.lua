@@ -163,3 +163,8 @@ end
 function Vector:distperf(v)
   return (v.x-self.x)*(v.x-self.x)+(v.y-self.y)*(v.y-self.y)
 end
+
+--Perp prod of 2 2D vect
+function Vector:Perp(vec)
+  return self.x*vec.y-self.y*vec.x
+end
