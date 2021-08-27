@@ -26,6 +26,7 @@ local parts ={
   "Vector",
   "Rectangle",
   "Circle",
+  "Polygon",
   "MathUtils"
 }
 

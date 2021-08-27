@@ -143,7 +143,7 @@ function Vector:ColS(seg)
 end
 
 --opposite segments of a rectangle for
-function Vect:OpS(rect)
+function Vector:OpS(rect)
   opsegs={}
   for key,vert in pairs(rect:findVertices()) do
     local coll=0
