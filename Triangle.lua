@@ -1,3 +1,6 @@
+
+-- not used rn, see polygon
+
 Triangle = Class{}
 
 function Triangle:init(vertices)

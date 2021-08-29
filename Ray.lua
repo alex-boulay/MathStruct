@@ -8,3 +8,7 @@ end
 function Ray:type()
   return "Ray"
 end
+
+function Ray:intersect(segment)
+
+end

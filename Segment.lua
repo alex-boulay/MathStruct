@@ -13,8 +13,13 @@ end
 function Segment:length()
   return MSnorm(self.endp.y-self.startp.y,self.endp.x-self.startp.x)
 end
+
 function Segment:toLine()
   return Line(self.startp,self.endp:sub(self.startp))
+end
+
+function Segment:toVect()
+  return self.endp:sub(self.startp)
 end
 
 function Segment:project(vector)
@@ -69,9 +74,7 @@ assert(s1:ColS(s3),"Segment collision function error")
 assert(s2:ColS(s3),"Segment collision function error")
 ]]
 
-function Segment:intersect(segment)
 
-end
 function Segment:print()
   return "P1 : "+self.startp:print()+" | P2 : "+self.endp:print()+" ;\n"
 end
@@ -104,4 +107,91 @@ end
 
 function Segment:ColOR(orect)
   return orect:ColS(self)
+end
+
+--[[Testcode
+require "MathStructs"
+
+]]
+function Segment:inside(point)
+  if self.startp.x != self.endp.x then
+    if self.startp.x <= point.x and point.x <= self.endp.x then
+      return true
+    end
+    if self.startp.x >= point.x and point.x >= self.endp.x then
+      return true
+    end
+  else
+    if self.startp.y <= point.y and point.y<=self.endp.y then
+      return true
+    end
+    if self.startp.y >= point.y and point.y >= self.endp.y then
+      return true
+    end
+  end
+  return false
+end
+
+function Segment:IntersectS(seg)
+ local u = self:toVect()
+ local v = seg:toVect()
+ local w= self.startp:sub(seg.startp)
+ if u:Perp(v) == 0 then
+   if u:Perp(w) ~= 0 or v:Perp(w) ~=0 then
+     return false
+   end
+   local du = u:dotProd(u)
+   local dv = V:dotProd(v)
+   if (du == 0 and dv == 0) then
+     if self.startp ~= seg.startp then
+       return false
+     end
+     return self.startp
+   end
+   if du==0 then
+     if not seg:inside(self.startp) then
+       return false
+     end
+     return self.startp
+   end
+   if dv == 0 then
+     if not self:inside(seg.startp) then
+       return false
+     end
+     return seg.startp
+   end
+   local t0
+   local t1
+   local w2 = self.endp:sub(seg.startp)
+   if v.x ~=0 then
+     t0 = w.x /v.x
+     t1 = w2.x /v.x
+   else
+     t0 = w.y /v.y
+     t1 = w2.y / v.y
+   end
+   if t0>t1 then
+     local t = t0
+     t0=t1
+     t1=t
+   end
+   if t1 >1 or t1 <0 then
+     return false
+   end
+   t0 = max(0, t0)
+   t1 = min(1, t1)
+   if t0 == t1 then
+     return seg.startp:add(v:multiply(t0))
+   end
+   return Segment(seg.startp:add(v:multiply(t0)),seg.startp:add(v:multiply(t1)))
+ end
+ local sI = v:Perp(w)/u:Perp(v)
+ if sI <0 or sI > 1 then
+   return false
+ end
+ local tI = u:Perp(w)/u:Perp(v)
+ if tI< 0 or tI > 1 then
+   return false
+ end
+ return self.stratp:add(sI:multiply(u))
 end

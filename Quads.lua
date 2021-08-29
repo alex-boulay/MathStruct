@@ -1,3 +1,5 @@
+
+-- Unused atm square shall be implemented through Rectangle and Quad through polynom
 Quad = Class{}
 
 function Quad:init(vertices)
