@@ -95,10 +95,17 @@ end
 --to verify
 function Vector:project(vect)
   if vect:dotProd(vect)>0 then
-    return vect:multiply(vect:dotProd(vect),self:dotProd(vect))
+    return vect:multiply(self:dotProd(vect)/vect:dotProd(vect))
   end
   return vect
 end
+
+--[[Testcode
+  require "MathStructs"
+  a = Vector(1, 0)
+  b = Vector(5, 6)
+  assert(b:project(a)==5,"vector projection error")
+]]
 
 function Vector:clampRect(rect)
   return Vector(Range(rect.c.x,rect.c.x+rect.s.x):clamp(self.x),Range(rect.c.y,rect.c.y+rect.s.y):clamp(self.y))

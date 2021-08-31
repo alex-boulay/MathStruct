@@ -59,6 +59,7 @@ function Segment:ColS(segment)
     return true
   end
 end
+
 --[[Testcode
 require "MathStructs"
 a = Vector(3,4)
@@ -80,17 +81,31 @@ function Segment:print()
 end
 
 function Segment:ColP(point)
-  local d=self.endp:sub(self.startp)
-  local lp=point:sub(self.startp)
-  local pr= lp:project(d)
-  return lp:eq(pr) and pr.length()<=d:length()and 0<= pr:dotProd(d)
+  local d = self.endp:sub(self.startp)
+  local lp = point:sub(self.startp)
+  local pr = lp:project(d)
+  return lp:eq(pr) and pr:length()<=d:length() and 0<= pr:dotProd(d)
 end
 
 --[[Testcode
 require "MathStructs"
-p = Vector(1, 4)
-s = Segment(Vector(6, 6),Vector(13, 4))
-assert(not s:ColP(p),"Segment to point collision function issue");
+a = Vector(-3,-1)
+b = Vector(5,3)
+seg1 = Segment(a,b)
+c = Vector(-5,2)
+d = Vector(7,4)
+e = Vector(3,2)
+f = Vector(-1,0)
+g = Vector(-1,2)
+h = Vector(1,-1)
+assert(seg1:ColP(a),"Segment to point collision function issue")
+assert(seg1:ColP(b),"Segment to point collision function issue")
+assert(not seg1:ColP(c),"Segment to point collision function issue")
+assert(not seg1:ColP(d),"Segment to point collision function issue")
+assert(seg1:ColP(e),"Segment to point collision function issue")
+assert(seg1:ColP(f),"Segment to point collision function issue")
+assert(not seg1:ColP(g),"Segment to point collision function issue")
+assert(not seg1:ColP(h),"Segment to point collision function issue")
 ]]
 
 function Segment:ColC(circle)
@@ -109,12 +124,10 @@ function Segment:ColOR(orect)
   return orect:ColS(self)
 end
 
---[[Testcode
-require "MathStructs"
 
-]]
+-- Other point segment collision funcion to Test
 function Segment:inside(point)
-  if self.startp.x != self.endp.x then
+  if self.startp.x ~= self.endp.x then
     if self.startp.x <= point.x and point.x <= self.endp.x then
       return true
     end
@@ -131,6 +144,8 @@ function Segment:inside(point)
   end
   return false
 end
+
+
 
 function Segment:IntersectS(seg)
  local u = self:toVect()
@@ -149,13 +164,13 @@ function Segment:IntersectS(seg)
      return self.startp
    end
    if du==0 then
-     if not seg:inside(self.startp) then
+     if not seg:ColP(self.startp) then
        return false
      end
      return self.startp
    end
    if dv == 0 then
-     if not self:inside(seg.startp) then
+     if not self:ColP(seg.startp) then
        return false
      end
      return seg.startp
