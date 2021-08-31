@@ -208,5 +208,21 @@ function Segment:IntersectS(seg)
  if tI< 0 or tI > 1 then
    return false
  end
- return self.stratp:add(sI:multiply(u))
+ return self.startp:add(u:multiply(sI))
 end
+
+
+--[[Testcode
+require "MathStructs"
+a = Vector(-4,-1)
+b = Vector(4,1)
+seg1 = Segment(a,b)
+c = Vector(-2,6)
+d = Vector(1,-3)
+seg2 = Segment(c,d)
+e = Vector(0,-3.39)
+f = Vector(-11.24,3.95)
+seg3 = Segment(e,f)
+assert(seg1:IntersectS(seg2):eq(NullVec),"Segment to segment intersection error")
+assert(not seg2:IntersectS(seg3),"Segment to segment intersection error")
+]]

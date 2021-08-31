@@ -104,7 +104,7 @@ end
   require "MathStructs"
   a = Vector(1, 0)
   b = Vector(5, 6)
-  assert(b:project(a)==5,"vector projection error")
+  assert(b:project(a):eq(Vector(5,0)),"vector projection error")
 ]]
 
 function Vector:clampRect(rect)
