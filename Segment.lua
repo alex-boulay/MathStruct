@@ -14,8 +14,11 @@ function Segment:length()
   return MSnorm(self.endp.y-self.startp.y,self.endp.x-self.startp.x)
 end
 
+function Segment:Direction()
+  self.endp:sub(self.startp)
+end
 function Segment:toLine()
-  return Line(self.startp,self.endp:sub(self.startp))
+  return Line(self.startp,self:Direction())
 end
 
 function Segment:toVect()
