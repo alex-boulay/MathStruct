@@ -34,16 +34,42 @@ assert(r:ColP(f),"Ray Point collision funcion issue")
 ]]
 
 function Ray:ColS(seg)
-  if self:ColP(seg:startp) or self:ColP(seg:endp) then
+  if self:ColP(seg.startp) or self:ColP(seg.endp) then
     return true
   end
-  local s1= seg.startp:sub(self.base)
-  local s2= seg.endp:sub(self.base)
-  if self.d:perp(s1)*self.d:perp(s2)>0 then
+  local s1= seg.startp:sub(self.b)
+  local s2= seg.endp:sub(self.b)
+  if self.d:Perp(s1)*self.d:Perp(s2)>0 then
     return false
   end
-  -- intersection equasion inside todo
+  --Perp prop 2 lines (A,a) (B,b) c=A-B t=b:perp(c)/b:perp(a)
+  --where t is the coeficient of line direction A + a*t
+  --so if t is negative it means that it intersect behind the ray
+  return seg:toVect():Perp(s1)/seg:toVect():Perp(self.d) >= 0
 end
+
+--[[Testcode
+require "MathStructs"
+r=Ray(Vector(0,0),Vector(1,1))
+a=Vector(-3,1)
+b=Vector(1,-3)
+c=Vector(4,-3)
+d=Vector(7,2)
+e=Vector(3,5)
+s1=Segment(a,b)
+s2=Segment(a,c)
+s3=Segment(a,d)
+s4=Segment(a,e)
+s5=Segment(c,d)
+s6=Segment(e,d)
+assert(not r:ColS(s1),"Ray Segment collision funcion issue")
+assert(not r:ColS(s2),"Ray Segment collision funcion issue")
+assert(r:ColS(s3),"Ray Segment collision funcion issue")
+assert(not r:ColS(s4),"Ray Segment collision funcion issue")
+assert(not r:ColS(s5),"Ray Segment collision funcion issue")
+assert(r:ColS(s6),"Ray Segment collision funcion issue")
+]]
+
 
 function Ray:intersect(segment)
 

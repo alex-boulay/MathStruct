@@ -1,14 +1,17 @@
 --[[
-All the textbelow is a lua adaptation of
+Some of the textbelow is a lua adaptation of
 ========================================
     2D Game Collision Detection
 ========================================
+Author: Thomas Schwarzl (aka hermitC)
+Book website: www.collisiondetection2d.net
+Author's game development blog: www.blackgolem.com
 
-  Author: Thomas Schwarzl (aka hermitC)
+Some other parts are adaptation from different sources
+->Practical Geometry Algorithms. by Daniel Sunday PhD
+(parts on segment rays and polygons)
 
-  Book website: www.collisiondetection2d.net
-
-  Author's game development blog: www.blackgolem.com
+->Graphics Gems I, II, III, IV
 
 
 Lua adaption by Alexandre Boulay
