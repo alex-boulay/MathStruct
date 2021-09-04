@@ -38,11 +38,9 @@ function Segment:OnOneSide(axis)
   return n:dotProd(d1)*n:dotProd(d2)>0
 end
 
-function Segment:project(vector)
-  local onto=vector:unit()
-  return Range(onto:dotProd(self.startp),onto:dotProd(self.endp))
+function Segment:reverse()
+  return Segment(self.endp,self.startp)
 end
-
 --segment collision
 function Segment:ColS(segment)
   local LineA, LineB
@@ -150,7 +148,7 @@ end
 
 
 
-function Segment:IntersectS(seg)
+function Segment:intS(seg)
  local u = self:toVect()
  local v = seg:toVect()
  local w= self.startp:sub(seg.startp)
