@@ -122,3 +122,4 @@ s5=Segment(c,d)
 s6=Segment(e,d)
 s7=Segment(Vector(-2,-2),Vector(-4,-4))
 print(r:IntS())
+]]
