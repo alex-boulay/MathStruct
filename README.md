@@ -3,8 +3,8 @@ Some of the textbelow is a lua adaptation of
   ##  2D Game Collision Detection
 
 Author: Thomas Schwarzl (aka hermitC)
-[Book website ] (www.collisiondetection2d.net "Book website")
-[Author's game development blog] (www.blackgolem.com "blog")
+[Book website ](www.collisiondetection2d.net "Book website")
+[Author's game development blog](www.blackgolem.com "blog")
 
 Some other parts are adaptation from different sources:
 *Practical Geometry Algorithms. by Daniel Sunday PhD
