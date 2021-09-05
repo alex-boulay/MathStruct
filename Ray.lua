@@ -86,6 +86,7 @@ function Ray:IntS(seg)
         s1=s2
         s2=temp
       end
+      print(seghe:toString())
       if s1:DotProd(self.d)<0 then
         return Segment(self.b,seghe.endp)
       else
@@ -100,16 +101,17 @@ function Ray:IntS(seg)
   end
   if self.d:Perp(s1)*self.d:Perp(s2)>0 then
     return false
-  end
+  else
   --Perp prop 2 lines (A,a) (B,b) c=A-B t=b:perp(c)/b:perp(a)
   --where t is the coeficient of line direction A + a*t
-  return self.b:add(self.d:multiply(seg:toVect():Perp(s1)/seg:toVect():Perp(self.d)))
+    return self.b:add(self.d:multiply(seg:toVect():Perp(s1)/seg:toVect():Perp(self.d)))
+  end
 end
 
 --[[Testcode
 require "MathStructs"
 r=Ray(Vector(0,0),Vector(1,1))
-a=Vector(-3,1)
+a=Vector(-3,2)
 b=Vector(1,-3)
 c=Vector(4,-3)
 d=Vector(7,2)
@@ -121,5 +123,5 @@ s4=Segment(a,e)
 s5=Segment(c,d)
 s6=Segment(e,d)
 s7=Segment(Vector(-2,-2),Vector(-4,-4))
-print(r:IntS())
+print(r:IntS(s3):toString())
 ]]

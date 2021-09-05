@@ -7,7 +7,7 @@ Author: Thomas Schwarzl (aka hermitC)
 Book website: www.collisiondetection2d.net
 Author's game development blog: www.blackgolem.com
 
-Some other parts are adaptation from different sources
+Some other parts are adaptation from different sources:
 ->Practical Geometry Algorithms. by Daniel Sunday PhD
 (parts on segment rays and polygons)
 

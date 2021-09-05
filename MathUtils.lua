@@ -2,7 +2,7 @@
 FloatThreshold= Range(-0.0001,0.0001)
 
 
-function dumpstr(struct)
+function dumpstr(struct) --NO SELF CALLING STRUCTS !!
   dump="{ "
   for k,val in pairs(struct) do
     local str=""
@@ -46,7 +46,8 @@ function MScollide( a, b)
    Line= a:ColL(b),
    Segment= a:ColS(b),
    ORectangle= a:ColOR(b),
-   Point= a:ColP(b)
+   Point= a:ColP(b),
+   Ray=a:ColR(b)
  }
  return type[a:type()]
 end
