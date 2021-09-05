@@ -79,49 +79,65 @@ function Ray:IntS(seg)
   local s2= seg.endp:sub(self.b)
   if self:ColP(seg.startp) or self:ColP(seg.endp) then
     if self.d:Perp(seg:toVect()) == 0 then
-      local seghe =seg --enhanced version of the seg for calculus practicality
-      if self.d:DotProd(seg:toVect()) < 0 then
+      local seghe = seg --enhanced version of the seg for calculus practicality
+      if self.d:dotProd(seg:toVect()) < 0 then
         seghe=seg:reverse()
         local temp=s1
         s1=s2
         s2=temp
       end
-      print(seghe:toString())
-      if s1:DotProd(self.d)<0 then
+      if s1:dotProd(self.d)<0 then
         return Segment(self.b,seghe.endp)
       else
         return seghe
       end
     end
-    else if self:ColP(seg.startp) then
+    if self:ColP(seg.startp) then
       return seg.startp
     else
       return seg.endp
     end
-  end
-  if self.d:Perp(s1)*self.d:Perp(s2)>0 then
-    return false
   else
-  --Perp prop 2 lines (A,a) (B,b) c=A-B t=b:perp(c)/b:perp(a)
-  --where t is the coeficient of line direction A + a*t
-    return self.b:add(self.d:multiply(seg:toVect():Perp(s1)/seg:toVect():Perp(self.d)))
+    if self.d:Perp(s1)*self.d:Perp(s2)>0 then
+      return false
+    else
+      --Perp prop 2 lines (A,a) (B,b) c=A-B t=b:perp(c)/b:perp(a)
+      --where t is the coeficient of line direction A + a*t
+      local t = seg:toVect():Perp(s1)/seg:toVect():Perp(self.d)
+      if t >=0 then
+        return self.b:add(self.d:multiply(t))
+      else
+        return false
+      end
+    end
   end
 end
 
 --[[Testcode
 require "MathStructs"
-r=Ray(Vector(0,0),Vector(1,1))
-a=Vector(-3,2)
-b=Vector(1,-3)
-c=Vector(4,-3)
-d=Vector(7,2)
-e=Vector(3,5)
-s1=Segment(a,b)
-s2=Segment(a,c)
-s3=Segment(a,d)
-s4=Segment(a,e)
-s5=Segment(c,d)
-s6=Segment(e,d)
+a=Vector(0,0)
+b=Vector(1,1)
+r=Ray(a,b)
+c=Vector(-3,2)
+d=Vector(1,-3)
+e=Vector(4,-3)
+f=Vector(7,2)
+g=Vector(3,5)
+h=Vector(-2,-2)
+i=Vector(-4,-4)
+s1=Segment(c,d)
+s2=Segment(c,e)
+s3=Segment(c,f)
+s4=Segment(c,g)
+s5=Segment(c,h)
+s6=Segment(c,i)
 s7=Segment(Vector(-2,-2),Vector(-4,-4))
-print(r:IntS(s3):toString())
+assert(r:IntS(Segment(a,b)):eq(Segment(a,b)),"Ray to segment intersection function issue")
+assert(not r:IntS(s1),"Ray to segment intersection function issue")
+assert(not r:IntS(s2),"Ray to segment intersection function issue")
+assert(r:IntS(s3):eq(Vector(2,2)),"Ray to segment intersection function issue")
+assert(not r:IntS(s4),"Ray to segment intersection function issue")
+assert(not r:IntS(s5),"Ray to segment intersection function issue")
+assert(not r:IntS(s6),"Ray to segment intersection function issue")
+assert(not r:IntS(s7),"Ray to segment intersection function issue")
 ]]

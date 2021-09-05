@@ -30,6 +30,10 @@ function Segment:project(vector)
   return Range{ontoU:dotProd(self.startp),ontoU:dotProd(self.endp)}
 end
 
+function Segment:eq(segment)
+  return (segment.startp:eq(self.startp) and segment.endp:eq(self.endp))
+  or (segment.startp:eq(self.endp) and segment.endp:eq(self.startp))
+end
 
 function Segment:OnOneSide(axis)
   local d1 =axis.base:sub(self.startp)
@@ -77,8 +81,8 @@ assert(s2:ColS(s3),"Segment collision function error")
 ]]
 
 
-function Segment:print()
-  return "P1 : "+self.startp:print()+" | P2 : "+self.endp:print()+" ;\n"
+function Segment:toString()
+  return "P1 : "..self.startp:toString().." | P2 : "..self.endp:toString().." ;\n"
 end
 
 function Segment:ColP(point)
