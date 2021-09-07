@@ -141,3 +141,38 @@ assert(not r:IntS(s5),"Ray to segment intersection function issue")
 assert(not r:IntS(s6),"Ray to segment intersection function issue")
 assert(not r:IntS(s7),"Ray to segment intersection function issue")
 ]]
+
+function Ray:ColR(rectangle)
+  local edges=rectangle:Edges()
+  for k,v in pairs(edges) do
+    if self:ColS(v) then
+      return true
+    end
+  end
+  return false
+end
+
+function Ray:IntR(rect)
+  local edges = rect:Edges()
+  local result=[]
+  local calc
+  for k,v in pairs(edges) do
+    calc=self:IntS(v)
+    if calc~=false then
+      table.insert(result,calc)
+    end
+  end
+  if not next(result) then
+    return false
+  else
+    return result
+  end
+end
+
+function Ray:ColOR(rect)
+  return Ray:ColR(rect)
+end
+
+function Ray:IntOR(rect)
+  return Ray:IntR(rect)
+end

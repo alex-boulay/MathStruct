@@ -9,10 +9,11 @@ Author: Thomas Schwarzl (aka hermitC)
 [Author's game development blog](www.blackgolem.com "blog")
 
 Some other parts are adaptation from different sources:
-*Practical Geometry Algorithms. by Daniel Sunday PhD
+
+#Practical Geometry Algorithms. by Daniel Sunday PhD
 (parts on segment rays and polygons)
 
-*Graphics Gems I, II, III, IV
+#Graphics Gems I, II, III, IV
 
 
 Lua adaption by Alexandre Boulay
