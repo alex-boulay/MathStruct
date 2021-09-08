@@ -152,9 +152,14 @@ function Ray:ColR(rectangle)
   return false
 end
 
+--[[ Testcode
+require "MathStructs"
+
+]]
+
 function Ray:IntR(rect)
   local edges = rect:Edges()
-  local result=[]
+  local result={}
   local calc
   for k,v in pairs(edges) do
     calc=self:IntS(v)
@@ -175,4 +180,12 @@ end
 
 function Ray:IntOR(rect)
   return Ray:IntR(rect)
+end
+
+function Ray:ColC(circle)
+
+end
+
+function Ray:IntC(cirle)
+
 end

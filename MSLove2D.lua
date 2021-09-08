@@ -2,10 +2,8 @@
 This File is to facilitate Love2D calls like Drawings
 
 ]]
-function Rectangle:Draw()
-  for i =0,4 do
-    self:Edge(i):Draw()
-  end
+function Rectangle:Draw(mode)
+  love.graphics.rectangle(mode or "fill",self.c.x,self.c.y,self.s.x,self.s.y)
 end
 
 
