@@ -130,6 +130,27 @@ function Rectangle:ColOR(orect)
   return orect:ColR(self)
 end
 
+--return the opposite edge of rectangle to a point
+function Rectangle:OpEgesP(point)
+  local result ={}
+  local edges=self.Edges()
+  if self:ColP(point) then
+    return edges
+  end
+  if point.x < self.c.x then
+    table.insert(result,edges[3])
+  end
+  if point.x > self.b.x then
+    table.insert(result,edges[1])
+  end
+  if point.y < self.c.y then
+    table.insert(result,edges[2])
+  end
+  if point.y < self.b.y then
+    table.insert(result,edges[0])
+  end
+  return result
+end
 ORectangle = Class{}
 
 -- center is a point or vector halfExtend is the vector between center and top right corner
