@@ -10,7 +10,7 @@ function Circle:type()
 end
 --collision with another circle
 function Circle:ColC(circle)
-  return Segment(self.c,circle.c)<=(self.r+circle.r)
+  return Segment(self.c,circle.c):length()<=(self.r+circle.r)
 end
 
 function Circle:ColP(point)

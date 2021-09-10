@@ -39,7 +39,7 @@ function MSclamp(x,min,max)
 end
 
 
-function MScollide( a, b)
+function MScollide(a, b)
  local type = {
    Rectangle= a:ColR(b),
    Circle= a:ColC(b),
@@ -49,7 +49,7 @@ function MScollide( a, b)
    Point= a:ColP(b),
    Ray=a:ColR(b)
  }
- return type[a:type()]
+ return type[b:type()]
 end
 
 -- perp from 3 points
