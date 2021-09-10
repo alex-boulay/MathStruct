@@ -41,15 +41,15 @@ end
 
 function MScollide(a, b)
  local type = {
-   Rectangle= a:ColR(b),
-   Circle= a:ColC(b),
-   Line= a:ColL(b),
-   Segment= a:ColS(b),
-   ORectangle= a:ColOR(b),
-   Point= a:ColP(b),
-   Ray=a:ColR(b)
+   Rectangle= "R",
+   Circle= "C",
+   Line= "L",
+   Segment= "S",
+   ORectangle= "OR",
+   Point= "P",
+   Ray="R"
  }
- return type[b:type()]
+ return a["Col"..type[b:type()]](a,b)
 end
 
 -- perp from 3 points
