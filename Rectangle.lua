@@ -137,16 +137,16 @@ function Rectangle:OpEdgesP(point)
   if self:ColP(point) then
     return edges
   end
-  if point.x < self.c.x then
+  if point.x < self.b.x then
     table.insert(result,edges[1])
   end
-  if point.x > self.b.x then
+  if point.x >  self.c.x then
     table.insert(result,edges[3])
   end
-  if point.y < self.c.y then
+  if point.y <  self.b.y then
     table.insert(result,edges[0])
   end
-  if point.y > self.b.y then
+  if point.y > self.c.y then
     table.insert(result,edges[2])
   end
   return result

@@ -12,7 +12,7 @@ function Circle:Draw()
 end
 
 function Vector:Draw()
-  love.graphics.point(self.x,self.y)
+  love.graphics.points(self.x,self.y)
 end
 
 --[[Collision to border has to be done to print a line
@@ -28,5 +28,15 @@ end
 function ORectangle:Draw()
   for i =0,4 do
     self:Edge(i):Draw()
+  end
+end
+
+function Polygon:Draw()
+  for i,val in pairs(self.vs)do
+    if self.vs[i+1] ~= nil then
+      Segment(self.vs[i],self.vs[i+1]):Draw()
+    else
+      Segment(self.vs[i],self.vs[0]):Draw()
+    end
   end
 end

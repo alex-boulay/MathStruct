@@ -10,6 +10,14 @@ function Polygon:init(points)
   end
 end
 
+function Polygon:toString()
+  local str="Polygon :\n"
+  for k,v in ipairs(self.vs) do
+    str=str..'\t'..v:toString()
+  end
+  return str
+end
+
 function Polygon:toCircle()
   local dist = 0
   local p1
@@ -53,8 +61,8 @@ function Polygon:type()
   return "Polygon"
 end
 
-function Polygon:add(point,place)
-  table.insert(self.points,point,place)
+function Polygon:add(point)
+  table.insert(self.vs,point)
   self.size=self.size+1
 end
 

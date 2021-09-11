@@ -175,3 +175,40 @@ end
 function Vector:Perp(vec)
   return self.x*vec.y-self.y*vec.x
 end
+
+--shadow of a wall(segment) inside a screen(rectangle) from a lightsouce(self a point)
+function Vector:ScreenWallProj(wall,screen)
+  --rays starting at the edges of the wall from the lightsource
+  local v1=Ray(wall.endp,wall.endp:sub(self))
+  local v2=Ray(wall.startp,wall.startp:sub(self))
+  local edges=screen:Edges()
+  --need to be sure that we are going clockwize like the rectangle points
+  if v1.d:Perp(v2.d)> 0 then
+    local temp=v1
+    v1=v2
+    v2=temp
+  end
+  local p1 --tracking the point of impact of p1 on the screen
+  local p2 --      ''       ''       ''      p2     ''
+  local e1 --edge where p1 is
+  local e2 --edge where p2 is
+  for i,edge in pairs(edges) do
+    temp = v1:IntS(edge)
+    if temp~=false then
+      p1=temp
+      e1=i
+    end
+    temp= v2:IntS(edge)
+    if temp~=false then
+      p2=temp
+      e2=i
+    end
+  end
+  local result = Polygon{v1.b,p1}
+  for i=0,(e2-e1)%4 -1 do
+    result:add(edges[(e1+i)%4].endp)
+  end
+  result:add(p2)
+  result:add(v2.b)
+  return result
+end
