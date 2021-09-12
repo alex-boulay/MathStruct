@@ -166,9 +166,12 @@ function Vector:OpS(rect)
   return opsegs{}
 end
 
+function Vector:lenpow2()
+  return self.x*self.x+self.y*self.y
+end
 --distance without sqrt
 function Vector:distperf(v)
-  return (v.x-self.x)*(v.x-self.x)+(v.y-self.y)*(v.y-self.y)
+  return v:sub(self):lenpow2()
 end
 
 --Perp prod of 2 2D vect
