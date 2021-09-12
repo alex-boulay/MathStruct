@@ -33,9 +33,11 @@ end
 
 function Polygon:Draw()
   local n={}
-  for k,val in pairs(self.vs) do
-    table.insert(n,val.x)
-    table.insert(n,val.y)
+  if self.size >= 3 then
+    for k,val in pairs(self.vs) do
+      table.insert(n,val.x)
+      table.insert(n,val.y)
+    end
+    love.graphics.polygon("fill",n)
   end
-  love.graphics.polygon("fill",n)
 end

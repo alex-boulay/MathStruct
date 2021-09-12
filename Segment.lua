@@ -35,6 +35,19 @@ function Segment:eq(segment)
   or (segment.startp:eq(self.endp) and segment.endp:eq(self.startp))
 end
 
+--[[
+require "MathStructs"
+a= Vector(0,2)
+b= Vector(1,3)
+c=Vector(1,4)
+s1=Segment(a,b)
+s2=s1:reverse()
+s3=Segment(b,a)
+s4=Segment(a,c)
+assert(s1:eq(s2),"segment equality function error")
+assert(s1:eq(s3),"segment equality function error")
+assert(not s1:eq(s4),"segment equality function error")
+]]
 function Segment:OnOneSide(axis)
   local d1 =axis.base:sub(self.startp)
   local d2 = axis.base:sub(self.endp)

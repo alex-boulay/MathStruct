@@ -5,8 +5,10 @@ function Polygon:init(points)
   self.vs={}
   self:length()
   for key, val in pairs(points) do
-    self.vs[self.size]=val
-    self.size=self.size+1
+    if val.x~=nil and val.y~=nil then
+      self.vs[self.size]=val
+      self.size=self.size+1
+    end
   end
 end
 
@@ -62,8 +64,10 @@ function Polygon:type()
 end
 
 function Polygon:add(point)
-  table.insert(self.vs,point)
-  self.size=self.size+1
+  if point.x~=nil and point.y~=nil then
+    table.insert(self.vs,point)
+    self.size=self.size+1
+  end
 end
 
 function Polygon:length()
