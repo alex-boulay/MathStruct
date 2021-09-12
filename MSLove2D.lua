@@ -37,5 +37,5 @@ function Polygon:Draw()
     table.insert(n,val.x)
     table.insert(n,val.y)
   end
-  love.graphics.polygon("fill",unpack(n))
+  love.graphics.polygon("fill",n)
 end
