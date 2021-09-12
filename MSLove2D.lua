@@ -32,11 +32,10 @@ function ORectangle:Draw()
 end
 
 function Polygon:Draw()
-  for i,val in pairs(self.vs)do
-    if self.vs[i+1] ~= nil then
-      Segment(self.vs[i],self.vs[i+1]):Draw()
-    else
-      Segment(self.vs[i],self.vs[0]):Draw()
-    end
+  local n={}
+  for k,val in pairs(self.vs) do
+    table.insert(n,val.x)
+    table.insert(n,val.y)
   end
+  love.graphics.polygon("fill",unpack(n))
 end

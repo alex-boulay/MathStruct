@@ -65,7 +65,9 @@ assert(c1:ColR(r),"Circle Rectangle collision function error")
 assert(not c2:ColR(r),"Circle Rectangle collision function error")
 
 ]]
-
+function Circle:toRect()
+  return Rectangle(Vector(self.c.x-self.r,self.c.y-self.r),Vector(self.r*2,self.r*2))
+end
 
 Disc = Class{}
 

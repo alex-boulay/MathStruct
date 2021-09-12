@@ -11,6 +11,9 @@ function Vector:type()
   return "Point"
 end
 
+function Vector:dumpval()
+  return self.x,self.y
+end
 function Vector:length()
   if not self.len  then
     self.len=math.sqrt(self.x*self.x + self.y*self.y)
