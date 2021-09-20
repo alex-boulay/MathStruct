@@ -11,6 +11,9 @@ function Rectangle:type()
   return "Rectangle"
 end
 
+function Rectangle:toString()
+  return "Rectangle : origin -> "..self.c:toString().." size -> "..self.s:toString()
+end
 --warning C is the 4th point in a trigo rectangle a->b->d->c is the hull
 function Rectangle:findVertices()
   if not self.a then

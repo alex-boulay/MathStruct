@@ -95,7 +95,7 @@ assert(s2:ColS(s3),"Segment collision function error")
 
 
 function Segment:toString()
-  return "P1 : "..self.startp:toString().." | P2 : "..self.endp:toString().." ;\n"
+  return "P1 : "..self.startp:toString().." | P2 : "..self.endp:toString().." ;"
 end
 
 function Segment:ColP(point)

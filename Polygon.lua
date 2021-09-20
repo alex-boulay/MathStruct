@@ -123,3 +123,9 @@ pol = Polygon{pa,pb,pc,pd,pe,pf,pg}
 assert(pol:ColP(ph),"Collision function polygon point issue")
 assert(not pol:ColP(pi),"Collision function polygon point issue")
 ]]
+
+function Polygon:offset(x,y)
+  for k,val in pairs(self.vs)do
+    self.vs[k]= Vector(val.x+x,val.y+y)
+  end
+end

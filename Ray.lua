@@ -9,7 +9,9 @@ function Ray:type()
   return "Ray"
 end
 
-
+function Ray:toString()
+  return "Ray : origin -> "..self.b:toString().." direction -> "..self.d:toString()
+end
 
 --point collision
 function Ray:ColP(p)

@@ -26,7 +26,7 @@ function Vector:unit()
 end
 
 function Vector:toString()
-  return "Vector "..dumpstr(self)
+  return "Vector { x : "..self.x.."| y : "..self.y.." }"
 end
 
 function Vector:add(vector)
@@ -186,7 +186,7 @@ end
 function Vector:ScreenWallProj(wall,screen)
   --rays starting at the edges of the wall from the lightsource
   local v1=Ray(wall.endp,wall.endp:sub(self))
-  local v2=Ray(wall.startp,wall.startp:sub(self))
+  local v2=Ray(wall.startp,wall.startp:sub(self)) 
   local edges=screen:Edges()
   --need to be sure that we are going clockwize like the rectangle points
   if v1.d:Perp(v2.d)> 0 then
@@ -209,6 +209,9 @@ function Vector:ScreenWallProj(wall,screen)
       p2=temp
       e2=i
     end
+  end
+  if e2 ==nil or e1 == nil then
+    return nil
   end
   local result = Polygon{v1.b,p1}
   for i=0,(e2-e1)%4 -1 do

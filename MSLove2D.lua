@@ -41,3 +41,7 @@ function Polygon:Draw()
     love.graphics.polygon("fill",n)
   end
 end
+
+function Ray:Draw()
+  Segment(self.b,self.b:add(self.d)):Draw()
+end
